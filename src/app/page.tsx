@@ -5,6 +5,7 @@ import {
   AiOutlineCheckCircle,
   AiOutlineCalendar,
 } from "react-icons/ai";
+import TodoCards from "./components/Todo/todoCards";
 
 export default function Home() {
   return (
@@ -19,40 +20,9 @@ export default function Home() {
                 <div>To Do</div>
                 <AiOutlinePlus />
               </div>
-              <div className="w-full shadow-xl border-2 h-28 rounded-md p-4 flex flex-col justify-around">
-                <div className="flex items-center gap-2 ">
-                  <AiOutlineCheckCircle size={25} />
-                  <div className="">Mengerjakan Tugas Basdat</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <AiOutlineCalendar size={15} className="" />
-
-                  <div className="text-xs text-gray-500">Wednesday</div>
-                </div>
-              </div>
-              <div className="w-full shadow-xl border-2 h-28 rounded-md p-4 flex flex-col justify-around">
-                <div className="flex items-center gap-2 ">
-                  <AiOutlineCheckCircle size={25} />
-                  <div className="">Mengerjakan Tugas Basdat</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <AiOutlineCalendar size={15} className="" />
-
-                  <div className="text-xs text-gray-500">Wednesday</div>
-                </div>
-              </div>
-              <div className="w-full shadow-xl border-2 h-28 rounded-md p-4 flex flex-col justify-around">
-                <div className="flex items-center gap-2 ">
-                  <AiOutlineCheckCircle size={25} />
-                  <div className="">Mengerjakan Tugas Basdat</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <AiOutlineCalendar size={15} className="" />
-
-                  <div className="text-xs text-gray-500">Wednesday</div>
-                </div>
-              </div>
-              
+              <TodoCards title="Mengerjakan Tugas Basdat" time="Wednesday" />
+              <TodoCards title="Mengerjakan Tugas Basdat" time="Wednesday" />
+              <TodoCards title="Mengerjakan Tugas Basdat" time="Wednesday" />               
             </div>
             <div className="w-3/12 flex justify-between px-2">
               <div>In progress</div>
