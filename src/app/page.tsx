@@ -55,6 +55,20 @@ function Home() {
   const [contentTodo, setContentTodo] = useState("");
   console.log(titleTodo);
 
+  const handleSubmit = () => {
+    let url = "http://localhost:3000/api/v1/todo"
+    try{
+      let data = axios.post(url, {
+        "title": titleTodo,
+        "content": contentTodo,
+        "category": "TODO"
+      })
+    } catch(err) {
+      console.log(err)
+    }
+    
+  }
+
   return (
     <>
       <QueryClientProvider client={queryClient} contextSharing={true}>
