@@ -10,7 +10,6 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 
-
 async function getTodoCatTODO() {
   let url = "http://localhost:3000/api/v1/todo/cat/todo";
   try {
@@ -66,6 +65,10 @@ function Home() {
   const [titleINPROGRESS, setTitleINPROGRESS] = useState("");
   const [contentINPROGRESS, setContentINPROGRESS] = useState("");
 
+  //varibales for INPROGRESS Category
+  const [showformNote, setShowFormNote] = useState(false);
+  const [contentNote, setContentNote] = useState("");
+
   console.log(titleTodo);
 
   const handleSubmitcatTODO = () => {
@@ -100,6 +103,23 @@ function Home() {
           setTitleINPROGRESS(""), setContentINPROGRESS("");
         })
         .then(() => refetchINPROGRESS());
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmitNote = () => {
+    let url = "http://localhost:3000/api/v1/note";
+    try {
+      let data = axios
+        .post(url, {
+          content: contentNote,
+        })
+        .then(() => {
+          setContentNote("");
+        })
+        .then(() => refetchNotes());
       return data;
     } catch (err) {
       console.log(err);
@@ -205,10 +225,33 @@ function Home() {
               <AiOutlinePlus />
             </div>
             <div className="w-3/12 px-2 flex flex-col gap-5">
-              <div className=" flex justify-between">
+              <div
+                className=" flex justify-between"
+                onClick={() => setShowFormNote(!showformNote)}
+              >
                 <div>Notes & References</div>
                 <AiOutlinePlus />
               </div>
+              {showformNote && (
+                <div className="w-full shadow-xl border-2 h-20 rounded-md p-4 flex gap-5 justify-evenly items-center">
+                  <div className="">
+                    <div className="flex flex-col gap-1">
+                      <div>Content</div>
+                      <input
+                        className="border-2"
+                        onChange={(event) => {
+                          setContentNote(event.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                  <AiOutlineSend
+                    size={30}
+                    className={`cursor-pointer`}
+                    onClick={() => handleSubmitNote()}
+                  />
+                </div>
+              )}
               {dataNotes
                 ? dataNotes.data.todo.map((value: any, index: number) => (
                     <TodoCards title={value.content} time={value.createdAt} />
