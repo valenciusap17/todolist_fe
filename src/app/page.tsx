@@ -136,7 +136,7 @@ function Home() {
             <div className="w-3/12 px-2 flex flex-col gap-5">
               <div
                 onClick={() => setShowFormTODO(!showformTODO)}
-                className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
+                className="flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
               >
                 <div className="">To Do</div>
                 <AiOutlinePlus />
@@ -226,7 +226,7 @@ function Home() {
             </div>
             <div className="w-3/12 px-2 flex flex-col gap-5">
               <div
-                className=" flex justify-between"
+                className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
                 onClick={() => setShowFormNote(!showformNote)}
               >
                 <div>Notes & References</div>
