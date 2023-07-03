@@ -44,30 +44,68 @@ async function getNotes() {
 
 function Home() {
   // const { data } = useQuery(["getAllTodo"], getNotes);
-  const { data: dataTodo } = useQuery(["getAllTodoCatTODO"], getTodoCatTODO);
-  const { data: dataprogress } = useQuery(
+  const { data: dataTodo, refetch: refetchTodo } = useQuery(
+    ["getAllTodoCatTODO"],
+    getTodoCatTODO
+  );
+  const { data: dataprogress, refetch: refetchINPROGRESS } = useQuery(
     ["getAllTodoCatINPROGRESS"],
     getTodoCatINPROGRESS
   );
-  const { data: dataNotes } = useQuery(["getAllNotes"], getNotes);
-  const [showform, setShowForm] = useState(false);
+  const { data: dataNotes, refetch: refetchNotes } = useQuery(
+    ["getAllNotes"],
+    getNotes
+  );
+
+  //varibales for TODO Category
+  const [showformTODO, setShowFormTODO] = useState(false);
   const [titleTodo, setTitleTodo] = useState("");
   const [contentTodo, setContentTodo] = useState("");
+
+  //varibales for INPROGRESS Category
+  const [showformINPROGRESS, setShowFormINPROGRESS] = useState(false);
+  const [titleINPROGRESS, setTitleINPROGRESS] = useState("");
+  const [contentINPROGRESS, setContentINPROGRESS] = useState("");
+
   console.log(titleTodo);
 
-  const handleSubmit = () => {
-    let url = "http://localhost:3000/api/v1/todo"
-    try{
-      let data = axios.post(url, {
-        "title": titleTodo,
-        "content": contentTodo,
-        "category": "TODO"
-      })
-    } catch(err) {
-      console.log(err)
+  const handleSubmitcatTODO = () => {
+    let url = "http://localhost:3000/api/v1/todo";
+    try {
+      let data = axios
+        .post(url, {
+          title: titleTodo,
+          content: contentTodo,
+          category: "TODO",
+        })
+        .then(() => {
+          setTitleTodo(""), setContentTodo("");
+        })
+        .then(() => refetchTodo());
+      return data;
+    } catch (err) {
+      console.log(err);
     }
-    
-  }
+  };
+
+  const handleSubmitcatINPROGRESS = () => {
+    let url = "http://localhost:3000/api/v1/todo";
+    try {
+      let data = axios
+        .post(url, {
+          title: titleINPROGRESS,
+          content: contentINPROGRESS,
+          category: "INPROGRESS",
+        })
+        .then(() => {
+          setTitleINPROGRESS(""), setContentINPROGRESS("");
+        })
+        .then(() => refetchINPROGRESS());
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -79,13 +117,13 @@ function Home() {
             <div className="w-11/12 flex justify-evenly gap-3">
               <div className="w-3/12 px-2 flex flex-col gap-5">
                 <div
-                  onClick={() => setShowForm(!showform)}
+                  onClick={() => setShowFormTODO(!showformTODO)}
                   className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
                 >
                   <div className="">To Do</div>
                   <AiOutlinePlus />
                 </div>
-                {showform && (
+                {showformTODO && (
                   <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
                     <div className="">
                       <div className="flex flex-col gap-1">
@@ -107,7 +145,11 @@ function Home() {
                         ></input>
                       </div>
                     </div>
-                    <AiOutlineSend size={50} className={`cursor-pointer`} />
+                    <AiOutlineSend
+                      size={50}
+                      className={`cursor-pointer`}
+                      onClick={() => handleSubmitcatTODO()}
+                    />
                   </div>
                 )}
 
@@ -118,10 +160,42 @@ function Home() {
                   : "Belum ada isinya ngab :("}
               </div>
               <div className="w-3/12 px-2 flex flex-col gap-5">
-                <div className=" flex justify-between">
+                <div
+                  className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
+                  onClick={() => setShowFormINPROGRESS(!showformINPROGRESS)}
+                >
                   <div>In progress</div>
                   <AiOutlinePlus />
                 </div>
+                {showformINPROGRESS && (
+                  <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
+                    <div className="">
+                      <div className="flex flex-col gap-1">
+                        <div>Title</div>
+                        <input
+                          className="border-2"
+                          onChange={(event) => {
+                            setTitleINPROGRESS(event.target.value);
+                          }}
+                        ></input>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <div>Content</div>
+                        <input
+                          className="border-2"
+                          onChange={(event) => {
+                            setContentINPROGRESS(event.target.value);
+                          }}
+                        ></input>
+                      </div>
+                    </div>
+                    <AiOutlineSend
+                      size={50}
+                      className={`cursor-pointer`}
+                      onClick={() => handleSubmitcatINPROGRESS()}
+                    />
+                  </div>
+                )}
                 {dataprogress
                   ? dataprogress.data.todos.map((value: any, index: number) => (
                       <TodoCards title={value.title} time={value.createdAt} />
