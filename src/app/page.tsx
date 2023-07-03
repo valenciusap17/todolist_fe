@@ -10,7 +10,6 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 
-const queryClient = new QueryClient();
 
 async function getTodoCatTODO() {
   let url = "http://localhost:3000/api/v1/todo/cat/todo";
@@ -109,126 +108,120 @@ function Home() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient} contextSharing={true}>
-        <div className="h-screen bg-white  flex flex-col">
-          <Navbar />
-          <div className="pt-20 "></div>
-          <div className="flex justify-center">
-            <div className="w-11/12 flex justify-evenly gap-3">
-              <div className="w-3/12 px-2 flex flex-col gap-5">
-                <div
-                  onClick={() => setShowFormTODO(!showformTODO)}
-                  className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
-                >
-                  <div className="">To Do</div>
-                  <AiOutlinePlus />
-                </div>
-                {showformTODO && (
-                  <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
-                    <div className="">
-                      <div className="flex flex-col gap-1">
-                        <div>Title</div>
-                        <input
-                          className="border-2"
-                          onChange={(event) => {
-                            setTitleTodo(event.target.value);
-                          }}
-                        ></input>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <div>Content</div>
-                        <input
-                          className="border-2"
-                          onChange={(event) => {
-                            setContentTodo(event.target.value);
-                          }}
-                        ></input>
-                      </div>
-                    </div>
-                    <AiOutlineSend
-                      size={50}
-                      className={`cursor-pointer`}
-                      onClick={() => handleSubmitcatTODO()}
-                    />
-                  </div>
-                )}
-
-                {dataTodo
-                  ? dataTodo.data.todos.map((value: any, index: number) => (
-                      <TodoCards title={value.title} time={value.createdAt} />
-                    ))
-                  : "Belum ada isinya ngab :("}
-              </div>
-              <div className="w-3/12 px-2 flex flex-col gap-5">
-                <div
-                  className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
-                  onClick={() => setShowFormINPROGRESS(!showformINPROGRESS)}
-                >
-                  <div>In progress</div>
-                  <AiOutlinePlus />
-                </div>
-                {showformINPROGRESS && (
-                  <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
-                    <div className="">
-                      <div className="flex flex-col gap-1">
-                        <div>Title</div>
-                        <input
-                          className="border-2"
-                          onChange={(event) => {
-                            setTitleINPROGRESS(event.target.value);
-                          }}
-                        ></input>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <div>Content</div>
-                        <input
-                          className="border-2"
-                          onChange={(event) => {
-                            setContentINPROGRESS(event.target.value);
-                          }}
-                        ></input>
-                      </div>
-                    </div>
-                    <AiOutlineSend
-                      size={50}
-                      className={`cursor-pointer`}
-                      onClick={() => handleSubmitcatINPROGRESS()}
-                    />
-                  </div>
-                )}
-                {dataprogress
-                  ? dataprogress.data.todos.map((value: any, index: number) => (
-                      <TodoCards title={value.title} time={value.createdAt} />
-                    ))
-                  : "Belum ada isinya ngab :("}
-              </div>
-              <div className="w-3/12 flex justify-between px-2">
-                <div>Done</div>
+      <div className="h-screen bg-white  flex flex-col">
+        <Navbar />
+        <div className="pt-20 "></div>
+        <div className="flex justify-center">
+          <div className="w-11/12 flex justify-evenly gap-3">
+            <div className="w-3/12 px-2 flex flex-col gap-5">
+              <div
+                onClick={() => setShowFormTODO(!showformTODO)}
+                className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
+              >
+                <div className="">To Do</div>
                 <AiOutlinePlus />
               </div>
-              <div className="w-3/12 px-2 flex flex-col gap-5">
-                <div className=" flex justify-between">
-                  <div>Notes & References</div>
-                  <AiOutlinePlus />
+              {showformTODO && (
+                <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
+                  <div className="">
+                    <div className="flex flex-col gap-1">
+                      <div>Title</div>
+                      <input
+                        className="border-2"
+                        onChange={(event) => {
+                          setTitleTodo(event.target.value);
+                        }}
+                      ></input>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div>Content</div>
+                      <input
+                        className="border-2"
+                        onChange={(event) => {
+                          setContentTodo(event.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                  <AiOutlineSend
+                    size={50}
+                    className={`cursor-pointer`}
+                    onClick={() => handleSubmitcatTODO()}
+                  />
                 </div>
-                {dataNotes
-                  ? dataNotes.data.todo.map((value: any, index: number) => (
-                      <TodoCards title={value.content} time={value.createdAt} />
-                    ))
-                  : "Belum ada isinya ngab :("}
+              )}
+
+              {dataTodo
+                ? dataTodo.data.todos.map((value: any, index: number) => (
+                    <TodoCards title={value.title} time={value.createdAt} />
+                  ))
+                : "Belum ada isinya ngab :("}
+            </div>
+            <div className="w-3/12 px-2 flex flex-col gap-5">
+              <div
+                className=" flex justify-between hover:cursor-pointer hover:transition hover:ease-in-out hover:scale-105 duration-150"
+                onClick={() => setShowFormINPROGRESS(!showformINPROGRESS)}
+              >
+                <div>In progress</div>
+                <AiOutlinePlus />
               </div>
+              {showformINPROGRESS && (
+                <div className="w-full shadow-xl border-2 h-36 rounded-md p-4 flex gap-5 justify-evenly items-center">
+                  <div className="">
+                    <div className="flex flex-col gap-1">
+                      <div>Title</div>
+                      <input
+                        className="border-2"
+                        onChange={(event) => {
+                          setTitleINPROGRESS(event.target.value);
+                        }}
+                      ></input>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div>Content</div>
+                      <input
+                        className="border-2"
+                        onChange={(event) => {
+                          setContentINPROGRESS(event.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                  <AiOutlineSend
+                    size={50}
+                    className={`cursor-pointer`}
+                    onClick={() => handleSubmitcatINPROGRESS()}
+                  />
+                </div>
+              )}
+              {dataprogress
+                ? dataprogress.data.todos.map((value: any, index: number) => (
+                    <TodoCards title={value.title} time={value.createdAt} />
+                  ))
+                : "Belum ada isinya ngab :("}
+            </div>
+            <div className="w-3/12 flex justify-between px-2">
+              <div>Done</div>
+              <AiOutlinePlus />
+            </div>
+            <div className="w-3/12 px-2 flex flex-col gap-5">
+              <div className=" flex justify-between">
+                <div>Notes & References</div>
+                <AiOutlinePlus />
+              </div>
+              {dataNotes
+                ? dataNotes.data.todo.map((value: any, index: number) => (
+                    <TodoCards title={value.content} time={value.createdAt} />
+                  ))
+                : "Belum ada isinya ngab :("}
             </div>
           </div>
         </div>
-      </QueryClientProvider>
+      </div>
     </>
   );
 }
 
 export default function App() {
-  return (
-    <QueryClientProvider client={new QueryClient()}>
-      <Home />
-    </QueryClientProvider>
-  );
+  return <Home />;
 }
